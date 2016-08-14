@@ -1,0 +1,56 @@
+{
+  "name": "polyamorous",
+  "author": "Aaron Ballard",
+  "description": "An opinionated frontend build system",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "browserify --no-bundle-external --node ./src/interfaces/cli.js -t [babelify --presets es2015] -o ./dist/cli.js",
+    "watch": "watchify --no-bundle-external --node ./src/interfaces/cli.js -t [babelify --presets es2015] -o ./dist/cli.js",
+    "build:min": "browserify --no-bundle-external --node ./src/interfaces/cli.js -t [babelify --presets es2015] | uglifyjs -cm --screw-ie8 > ./dist/cli.js",
+    "prepublish": "npm run build:min"
+  },
+  "bin": {
+    "poly": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ansballard/polyamorous.git"
+  },
+  "dependencies": {
+    "babel-cli": "^6.3.17",
+    "babel-eslint": "^6.1.2",
+    "babel-preset-es2015": "^6.5.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.0",
+    "clear": "0.0.1",
+    "core-js": "^2.3.0",
+    "cssnano": "^3.5.2",
+    "denodeify": "^1.2.1",
+    "glob": "^7.0.0",
+    "graceful-fs": "^4.1.5",
+    "keypress": "^0.2.1",
+    "ora": "^0.2.1",
+    "partialify": "^3.1.6",
+    "postcss": "^5.0.17",
+    "postcss-cssnext": "^2.4.0",
+    "postcss-import": "^8.0.2",
+    "pretty-bytes": "^3.0.1",
+    "rc": "^1.1.6",
+    "superstatic": "^4.0.3",
+    "uglify-js": "^2.6.2",
+    "uncss": "^0.13.0"
+  },
+  "engines": {
+    "node": "^0.10.48"
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "babel-preset-es2015": "^6.13.2",
+    "eslint": "^3.3.0",
+    "flow-bin": "^0.30.0",
+    "uglify-js": "^2.7.0",
+    "watchify": "^3.7.0"
+  }
+}
