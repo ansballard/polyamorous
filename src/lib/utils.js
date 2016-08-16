@@ -36,7 +36,8 @@ export function run(program = {}) {
       css: "dist/styles.css",
       sw: "sw.js"
     },
-    uncss: [],
+    uncss: false,
+    uncssRegex: [],
     port: 8080,
     host: "0.0.0.0",
     debug: false
@@ -109,6 +110,7 @@ export function run(program = {}) {
       public: join(process.cwd(), conf.public, "index.html"),
       minify: program.minify,
       uncss: conf.uncss,
+      uncssRegex: conf.uncssRegex,
       ignore: conf.dest.css
     })
     .catch(e => {

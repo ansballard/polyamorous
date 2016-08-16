@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.0 (08/15/2016)
+
+**Minor Updates**
+
+- added uncss support (off by default)
+  - probably still doesn't work
+
+**Patches**
+
+- none
+
 ## 0.1.0 (08/13/2016)
 
 **Minor Updates**
