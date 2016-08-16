@@ -16,12 +16,12 @@ const writeFileAsync = denodeify(writeFile);
 const globAsync = denodeify(glob);
 const uncssAsync = denodeify(uncss);
 
-const uncssIgnores = [
-  /\.modal(\-.*)?/,
-  /\.fade/,
-  /\.in/,
-  /\.es(m|p)/
-];
+// const uncssIgnores = [
+//   /\.modal(\-.*)?/,
+//   /\.fade/,
+//   /\.in/,
+//   /\.es(m|p)/
+// ];
 
 export default function css(opts = {}) {
     return readFileAsync(opts.entry, "utf8")
@@ -32,13 +32,13 @@ export default function css(opts = {}) {
         })
     )
     .then(result => result.css)
-    // .then(css => globAsync("./src/js/**/*.html")
-    //   .then(files => opts.minify ? uncssAsync(["./public/index.html"].concat(files), {
-    //     ignore: uncssIgnores,
-    //     raw: css,
-    //     ignoreSheets: [/\/dist\/styles\.css/]
-    //   }) : css)
-    // )
+    .then(css => globAsync(opts.templates)
+      .then(files => opts.minify ? uncssAsync([opts.index].concat(files), {
+        ignore: opts.uncss,
+        raw: css,
+        ignoreSheets: [opts.ignore]
+      }) : css)
+    )
     .then(css => opts.minify ? cssnano.process(css) : {css})
     .then(css => Promise.all([
       writeFileAsync(opts.out, css.css),

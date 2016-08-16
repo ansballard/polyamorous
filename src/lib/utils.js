@@ -5,8 +5,7 @@ import "core-js/fn/object/assign";
 import { watch } from "graceful-fs";
 import denodeify from "denodeify";
 import { writeFile } from "fs";
-import { join } from "path";
-import { dirname } from "path";
+import { dirname, join } from "path";
 import { server } from "superstatic";
 import { red } from "chalk";
 import prettyBytes from "pretty-bytes";
@@ -37,6 +36,7 @@ export function run(program = {}) {
       css: "dist/styles.css",
       sw: "sw.js"
     },
+    uncss: [],
     port: 8080,
     host: "0.0.0.0",
     debug: false
@@ -104,8 +104,12 @@ export function run(program = {}) {
   if(program.all || program.css) {
     processes.push(css({
       entry: join(program.cwd, conf.src.css),
+      out: join(program.cwd, conf.public, conf.dest.css),
+      templates: join(process.cwd(), dirname(conf.src.js), "**", "*.html"),
+      public: join(process.cwd(), conf.public, "index.html"),
       minify: program.minify,
-      out: join(program.cwd, conf.public, conf.dest.css)
+      uncss: conf.uncss,
+      ignore: conf.dest.css
     })
     .catch(e => {
       program.log("Error Building CSS:", e);
