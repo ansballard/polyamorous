@@ -2,6 +2,7 @@
 
 import "core-js/es6/promise";
 import "core-js/fn/object/assign";
+import { join } from "path";
 import { server } from "superstatic";
 
 export default function(opts = {}) {

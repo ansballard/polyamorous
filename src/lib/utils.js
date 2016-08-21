@@ -42,12 +42,13 @@ export function run(program = {}) {
     host: "0.0.0.0",
     debug: false
   })
+  });
 
   if(program.watch) {
     if(program.serve) {
       serve(conf)
       .then(args => {
-        // program.log(`Serving at ${args.host}:${args.port}`);
+        program.log(`Serving at ${args.host}:${args.port}`);
       })
       .catch(e => {
         program.log("Error serving:", e);
@@ -108,6 +109,7 @@ export function run(program = {}) {
       out: join(program.cwd, conf.public, conf.dest.css),
       templates: join(process.cwd(), dirname(conf.src.js), "**", "*.html"),
       public: join(process.cwd(), conf.public, "index.html"),
+      index: join(process.cwd(), conf.public, "index.html"),
       minify: program.minify,
       uncss: conf.uncss,
       uncssRegex: conf.uncssRegex,

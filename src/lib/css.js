@@ -36,8 +36,8 @@ export default function css(opts = {}) {
     .then(files => opts.minify ? uncssAsync([opts.index].concat(files), {
       ignore: opts.uncssRegex,
       raw: css,
-      ignoreSheets: [opts.ignore]
-    }) : css)
+      ignoreSheets: [/.*/]
+    }).catch(e => {console.log(e)}) : css)
   : css)
   .then(css => opts.minify ? cssnano.process(css) : {css})
   .then(css => Promise.all([
