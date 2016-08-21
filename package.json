@@ -2,7 +2,7 @@
   "name": "polyamorous",
   "author": "Aaron Ballard",
   "description": "An opinionated frontend build system",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "index.js",
   "license": "Apache-2.0",
   "scripts": {

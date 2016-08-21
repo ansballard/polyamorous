@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.1 (08/20/2016)
+
+**Minor Updates**
+
+- none
+
+**Patches**
+
+- uncss should be working
+
 ## 0.2.0 (08/15/2016)
 
 **Minor Updates**
