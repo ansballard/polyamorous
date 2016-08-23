@@ -22,7 +22,6 @@ let watcher = {
 };
 
 export function run(program = {}) {
-
   const processes = [];
   const conf = rc("polyamorous", {
     public: "public",
@@ -41,7 +40,6 @@ export function run(program = {}) {
     port: 8080,
     host: "0.0.0.0",
     debug: false
-  })
   });
 
   if(program.watch) {

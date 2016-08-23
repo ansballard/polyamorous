@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 (08/23/2016)
+
+**Minor Updates**
+
+- switched to using blessed for the UI
+
+**Patches**
+
+- fixed typos in util.js
+
 ## 0.2.1 (08/20/2016)
 
 **Minor Updates**
