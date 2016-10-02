@@ -1,0 +1,9 @@
+{
+  "node": true,
+  "src": {
+    "node": "src/interfaces/nasa.js"
+  },
+  "dest": {
+    "node": "dist/nasa.js"
+  }
+}

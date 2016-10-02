@@ -15,7 +15,12 @@ const writeFileAsync = denodeify(writeFile);
 
 export default function javascript(opts = {}) {
   return new Promise((resolve, reject) => {
-    browserify(opts.entry)
+    browserify({
+      entries: opts.entry,
+      insertGlobals: !!opts.node,
+      builtins: !!opts.node,
+      bundleExternal: !opts.node
+    })
     .transform("babelify", {presets: ["es2015"]})
     .transform("partialify")
     .bundle((err, buf) => {
@@ -33,8 +38,8 @@ export default function javascript(opts = {}) {
     }))
   )
   .catch(e => {
-    console.log(`\nJavascript Error: ${red(e.message)}`);
     return {
+      errorRunner: "Javascript",
       error: e
     };
   })

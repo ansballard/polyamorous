@@ -25,13 +25,16 @@ export function run(program = {}) {
   const processes = [];
   const conf = rc("polyamorous", {
     public: "public",
+    node: false,
     src: {
       js: "src/js/entry.js",
+      node: "src/node/entry.js",
       css: "src/css/entry.css",
       sw: "src/serviceworkers/cache.sw.js"
     },
     dest: {
       js: "dist/bundle.js",
+      node: "dist/node.js",
       css: "dist/styles.css",
       sw: "sw.js"
     },
@@ -43,7 +46,7 @@ export function run(program = {}) {
   });
 
   if(program.watch) {
-    if(program.serve) {
+    if(program.serve && !conf.node) {
       serve(conf)
       .then(args => {
         program.log(`Serving at ${args.host}:${args.port}`);
@@ -57,29 +60,33 @@ export function run(program = {}) {
     });
   }
 
-  if(program.all || program.javascript) {
+  if(program.all || program.javascript || conf.node) {
     processes.push(javascript({
-      entry: join(program.cwd, conf.src.js),
+      entry: join(program.cwd, conf.node ? conf.src.node : conf.src.js),
       minify: program.minify,
-      out: join(program.cwd, conf.public, conf.dest.js)
+      node: program.node,
+      out: conf.node ? join(program.cwd, conf.dest.node) : join(program.cwd, conf.public, conf.dest.js)
     })
     .catch(e => {
-      program.log("Error Building Javascript", e);
+      program.log(`Error Building ${conf.node ? "Node" : "Javascript"}`, e);
     })
     .then(opts => {
+      if(opts.error) {
+        program.err(opts.error);
+      }
       if(program.watch) {
         watchFileType(Object.assign({}, opts, {
-          prettyName: "Javascript",
+          prettyName: conf.node ? "Node" : "Javascript",
           build: javascript
         }));
       } else {
-        program.log(`Built Javascript: ${prettyBytes(opts.bytes)}`);
+        program.log(`Built ${conf.node ? "Node" : "Javascript"}: ${prettyBytes(opts.bytes)}`);
       }
       return opts;
     }));
   }
 
-  if(program.all || program.serviceworkers) {
+  if((program.all || program.serviceworkers) && !conf.node) {
     processes.push(javascript({
       entry: join(program.cwd, conf.src.sw),
       minify: program.minify,
@@ -89,6 +96,9 @@ export function run(program = {}) {
       program.log("Error Building Service Workers", e);
     })
     .then(opts => {
+      if(opts.error) {
+        program.log(`${opts.errorRunner} Error: ${opts.error}`);
+      }
       if(program.watch) {
         watchFileType(Object.assign({}, opts, {
           prettyName: "Service Workers",
@@ -101,7 +111,7 @@ export function run(program = {}) {
     }));
   }
 
-  if(program.all || program.css) {
+  if((program.all || program.css) && !conf.node) {
     processes.push(css({
       entry: join(program.cwd, conf.src.css),
       out: join(program.cwd, conf.public, conf.dest.css),

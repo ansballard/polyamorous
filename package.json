@@ -6,12 +6,12 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "browserify --no-bundle-external --node ./src/interfaces/cli.js -t [babelify --presets es2015] -o ./dist/cli.js",
-    "build:nasa": "browserify --no-bundle-external --node ./src/interfaces/nasa.js -t [babelify --presets es2015] -o ./dist/nasa.js",
-    "watch": "watchify --no-bundle-external --node ./src/interfaces/cli.js -t [babelify --presets es2015] -o ./dist/cli.js",
-    "watch:nasa": "watchify --no-bundle-external --node ./src/interfaces/nasa.js -t [babelify --presets es2015] -o ./dist/nasa.js",
-    "build:min": "browserify --no-bundle-external --node ./src/interfaces/cli.js -t [babelify --presets es2015] | uglifyjs -cm --screw-ie8 > ./dist/cli.js",
-    "build:nasa:min": "browserify --no-bundle-external --node ./src/interfaces/nasa.js -t [babelify --presets es2015] | uglifyjs -cm --screw-ie8 > ./dist/nasa.js",
+    "build": "browserify --node ./src/interfaces/cli.js -t [babelify --presets es2015] -o ./dist/cli.js",
+    "build:nasa": "browserify --node ./src/interfaces/nasa.js -t [babelify --presets es2015] -o ./dist/nasa.js",
+    "watch": "watchify --node ./src/interfaces/cli.js -t [babelify --presets es2015] -o ./dist/cli.js",
+    "watch:nasa": "watchify --node ./src/interfaces/nasa.js -t [babelify --presets es2015] -o ./dist/nasa.js",
+    "build:min": "browserify --node ./src/interfaces/cli.js -t [babelify --presets es2015] | uglifyjs -cm --screw-ie8 > ./dist/cli.js",
+    "build:nasa:min": "browserify --node ./src/interfaces/nasa.js -t [babelify --presets es2015] | uglifyjs -cm --screw-ie8 > ./dist/nasa.js",
     "prepublish": "npm run build:min"
   },
   "bin": {

@@ -45,7 +45,10 @@ export default function css(opts = {}) {
     opts.sourcemap ? writeFileAsync(`${opts.out}.map`, css.map) : Promise.resolve()
   ]).then(() => ({bytes: css.css.length})))
   .catch(e => {
-    console.log(`\nCSS Error: ${red(e.message)}`);
+    return {
+      errorRunner: "CSS",
+      error: e
+    };
   })
   .then(res => Object.assign({}, res, opts));
 }
